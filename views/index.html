@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% autoescape on %}
+<html>
+	<head>
+		<title>SWOPIT</title>
+        <link rel="stylesheet" type="text/css" href="stylesheets/home.css" />
+	</head>
+  	<body>
+		<div id="overlay">
+	  		<div class="content">
+			  	<h1>SWOPIT.</h1>
+			  	<h2>L'argent n'existe pas ici, seul le partage règne !</h2>
+			  	<p>Ne vous prenez plus la tête pour meubler votre appartement, ou vous faire des petits plaisirs, sur SWOPIT tout est possible</p>
+
+				<form action="/signin" method="POST">
+			  		<input type="text" placeholder="N° Carte étudiante" name="username">
+			  		<input type="submit" value="Connexion" />
+			  	</form>
+		  	</div>
+  		</div>
+  	</body>
+</html>
+{% endautoescape %}
