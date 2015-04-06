@@ -1,7 +1,9 @@
 language: python
 python:
   - "2.7"
-before_script:
-- wget https://googleappengine.googlecode.com/files/google_appengine_1.8.9.zip -nv
-- unzip -q google_appengine_1.8.9.zip
+
+install:
+  - curl -O http://googleappengine.googlecode.com/files/google_appengine_1.8.9.zip && unzip -q google_appengine_1.8.9.zip
+  - pip install webtest
+
 script: 'python ./test_gae.py ./google_appengine .'

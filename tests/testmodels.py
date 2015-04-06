@@ -19,7 +19,11 @@ class UserTestCase(unittest.TestCase):
     models.User.put(models.User())
     self.assertEqual(1, len(models.User.query().fetch(2)))
 
-
+  def testExistUser(self):
+    models.User.put(models.User(number_card="12345"))
+    self.assertEqual(1, len(models.User.query().fetch(2)))
+    self.assertEqual(True, models.User.user_exist("12345"))
+    self.assertEqual(False, models.User.user_exist("123"))
 
 if __name__ == '__main__':
   unittest.main()
