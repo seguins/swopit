@@ -1,6 +1,9 @@
 from commons.base_handler import BaseHandler
 import commons.models
 
+from webapp2_extras.auth import InvalidAuthIdError
+from webapp2_extras.auth import InvalidPasswordError
+
 class LoginHandler(BaseHandler):
   def get(self):
     self._serve_page()
@@ -13,7 +16,6 @@ class LoginHandler(BaseHandler):
         save_session=True)
       self.redirect(self.uri_for('home'))
     except (InvalidAuthIdError, InvalidPasswordError) as e:
-      logging.info('Login failed for user %s because of %s', username, type(e))
       self._serve_page(True)
 
   def _serve_page(self, failed=False):
@@ -37,7 +39,7 @@ class SignupHandler(BaseHandler):
     unique_properties = ['email_address']
     user_data = self.user_model.create_user(user_name,
       unique_properties,
-      email_address=email, username=user_name, password_raw=password,
+      email_address=email, user_name=user_name, password_raw=password,
       number_card=number_card, verified=True)
     if not user_data[0]: #user_data is a tuple
       self.response.headers['Content-Type'] = 'text/plain'
