@@ -24,3 +24,10 @@ class User(User):
   def user_exist(cls, card_id):
     user = cls.query(cls.number_card == card_id).fetch(1);
     return len(user) == 1
+
+class Ad(ndb.Model):
+  user = ndb.StringProperty()
+  title = ndb.StringProperty()
+  info = ndb.TextProperty()
+  created = ndb.DateTimeProperty(auto_now_add=True)
+  image = ndb.BlobProperty()

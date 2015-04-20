@@ -8,6 +8,19 @@ from webapp2_extras import sessions
 
 import models
 
+def user_required(handler):
+  """
+    Decorator that checks if there's a user associated with the current session.
+    Will also fail if there's no session present.
+  """
+  def check_login(self, *args, **kwargs):
+    auth = self.auth
+    if not auth.get_user_by_session():
+      self.redirect(self.uri_for('login'), abort=True)
+    else:
+      return handler(self, *args, **kwargs)
+  return check_login
+
 class BaseHandler(webapp2.RequestHandler):
   @webapp2.cached_property
   def auth(self):
@@ -55,6 +68,11 @@ class BaseHandler(webapp2.RequestHandler):
     params['user'] = user
     path = os.path.join(os.path.dirname(__file__), '../views', view_filename)
     self.response.out.write(template.render(path, params))
+
+  def notfound(self):
+    self.response.out.write('Page introuvable!')
+    self.response.out.set_status(404)
+
 
   # this is needed for webapp2 sessions to work
   def dispatch(self):

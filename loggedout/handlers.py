@@ -1,5 +1,5 @@
 from commons.base_handler import BaseHandler
-import commons.models
+from commons.models import *
 
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
@@ -66,4 +66,9 @@ class MainHandler(BaseHandler):
     if not self.auth.get_user_by_session():
       self.render_template('index.html')
     else:
+
+      #greeting = Ad.get_by_id(4642138092470272);
+      #print(greeting)
       self.render_template('list.html')
+
+      #self.render_template('list.html', {'safe': '/photo/' + greeting.key.urlsafe()})
