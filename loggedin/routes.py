@@ -5,6 +5,7 @@ from loggedin import handlers as handlers
 _routes = [
   RedirectRoute('/logout', handlers.LogoutHandler, name='logout', strict_slash=True),
   RedirectRoute('/create', handlers.CreateHandler, name='create', strict_slash=True),
+  ('/list(/\d+)?', handlers.ListHandler),
   ('/view/([^/]+)?', handlers.ViewHandler),
   ('/photo/([^/]+)?', handlers.ImageHandler)
 ]

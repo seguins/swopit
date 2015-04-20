@@ -1,2 +1,20 @@
 <a href="/logout">Deconnexion</a>
 <a href="/create">Créer une annonce</a>
+
+
+{% for ad in ads %}
+<div>
+  <h3>{{ad.title}}</h3>
+  <p>{{ad.info}}</p>
+  <img src="/photo/{{ad.key.urlsafe}}" />
+  <hr />
+</div>
+{% endfor %}
+
+{% for i in pages %}
+  {% if current_page != i %}
+    <a href="/list/{{i}}">{{i}}</a>
+  {% else %}
+    {{i}}
+  {% endif %}
+{% endfor %}
