@@ -6,7 +6,7 @@ from loggedin import routes as loggedin_routes
 config = {
   'webapp2_extras.auth': {
     'user_model': 'commons.models.User',
-    'user_attributes': ['user_name']
+    'user_attributes': ['email_address']
   },
   'webapp2_extras.sessions': {
     'secret_key': 'YOUR_SECRET_KEY'

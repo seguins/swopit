@@ -1,14 +1,19 @@
-
-<h1>Inscription</h1>
-<form action="/signup" method="POST">
-	<label for="username">Pseudo</label>
-	<input type="text" name="username" /><br />
-	<label for="email">Addresse Email</label>
-	<input type="text" name="email" /><br />
-	<label for="password">Mot de passe</label>
-	<input type="password" name="password" /><br />
-	<label for="number_card">Numero de carte</label>
-	<input type="text" value="{{ number_card }}" name="number_card" /><br />
-	<input type="submit" value="Create user" />
-
-</form>
+{% extends "login-template.html" %}
+{% block form-content %}
+  <form action="/signup" method="POST">
+    <label for="number_card">Numero de carte étudiante</label>
+    <input type="text" value="{{ number_card }}" name="number_card" /><br />
+    <label for="lastname">Nom</label>
+    <input type="text" name="lastname" /><br />
+    <label for="firstname">Prénom</label>
+    <input type="text" name="firstname" /><br />
+    <label for="email">Addresse Email</label>
+    <input type="text" name="email" /><br />
+    <label for="password">Mot de passe</label>
+    <input type="password" name="password" /><br />
+    <label for="phone">Numéro de téléphone</label>
+    <input type="text" name="phone" /><br />
+    <button type="submit" class="btn">S'inscrire</button>
+  </form>
+  <a href="/login">Se connecter ?</a>
+{% endblock %}

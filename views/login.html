@@ -1,12 +1,12 @@
-<h1>Login</h1>
-
-<form class="form" action= "/login" method="POST">
-    <label for="username">Username</label>
-    <input type="text" value="{{ username }}" name="username"/>
-    <label for="password">Password</label>
-    <input type="password" name="password"/>
-    <button type="submit" class="btn">Login</button>
-</form>
-
-<a href="/forgot">Forgot password</a>
-
+{% extends "login-template.html" %}
+{% block form-content %}
+  <form class="form" action= "/login" method="POST">
+      <label for="username">Email</label>
+      <input type="text" value="{{ username }}" name="username"/>
+      <label for="password">Password</label>
+      <input type="password" name="password"/>
+      <button type="submit" class="btn">Se connecter</button>
+  </form>
+  <a href="/forgot">Mot de passe oublié ?</a> <br />
+  <a href="/signup">S'inscrire ?</a>
+{% endblock %}

@@ -31,20 +31,23 @@ class SignupHandler(BaseHandler):
     self.render_template('signup.html')
 
   def post(self):
-    user_name = self.request.get('username')
     email = self.request.get('email')
     password = self.request.get('password')
     number_card = self.request.get('number_card')
+    lastname = self.request.get('lastname')
+    firstname = self.request.get('firstname')
+    phone = self.request.get('phone')
 
     unique_properties = ['email_address']
-    user_data = self.user_model.create_user(user_name,
+    user_data = self.user_model.create_user(email,
       unique_properties,
-      email_address=email, user_name=user_name, password_raw=password,
-      number_card=number_card, verified=True)
+      email_address=email, password_raw=password,
+      number_card=number_card, lastname=lastname, firstname=firstname,
+      phone=phone, verified=True)
     if not user_data[0]: #user_data is a tuple
       self.response.headers['Content-Type'] = 'text/plain'
       self.response.write('Unable to create user for email %s because of \
-        duplicate keys %s' % (user_name, user_data[1]))
+        duplicate keys %s' % (email, user_data[1]))
       return
     
     user = user_data[1]

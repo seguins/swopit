@@ -1,0 +1,14 @@
+
+.file-field input.file-path {
+  margin-left: 125px;
+  width: calc(100% - 125px);
+}
+
+.adTitle {
+  font-size: x-large;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}

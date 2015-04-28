@@ -1,20 +1,53 @@
-<a href="/logout">Deconnexion</a>
-<a href="/create">Créer une annonce</a>
+{% extends "intra.html" %}
+
+{% block currentTitle %}Liste des annonces{% endblock %}
+
+{% block content %}
+
+{% if ads|length != 0 %}
+
+  {% for ad in ads %}
+    <div class="row ad">
+      <div class="col s12 m4 l3"> <!-- Note that "m4 l3" was added -->
+        <img src="/photo/{{ad.key.urlsafe}}" />
+      </div>
+      <div class="col s12 m8 l9 "> 
+        <div class="row">
+          <div class="col s9 adTitle">{{ad.title}}</div>
+          <div class="col s2">
+            <a class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="50"
+              href="mailto:{{ad.email}}?Subject=[SWOPIT] {{ad.title}}" target="_blank"
+              data-tooltip="{{ad.email}} - {{ad.phone}}">
+            
+              Contacter l'anonceur
+            </a></div>
+          <div class="col s12">{{ad.info}}</div>
+        </div>
+      </div>
+    </div>
+    <hr />
+  {% endfor %}
 
 
-{% for ad in ads %}
-<div>
-  <h3>{{ad.title}}</h3>
-  <p>{{ad.info}}</p>
-  <img src="/photo/{{ad.key.urlsafe}}" />
-  <hr />
-</div>
-{% endfor %}
+  <ul class="pagination">
+      <li {%if current_page == 1 %} class="disabled" {% else %} class="waves-effect" {% endif %}>
+        <a href="/list/0"><i class="mdi-navigation-chevron-left"></i>
+      </a></li>
+  {% for i in pages %}
+    {% if current_page != i %}
+      <li class="waves-effect"><a href="/list/{{i|add:"-1"}}">{{i}}</a></li>
+    {% else %}
+      <li class="active"><a href="#!">{{i}}</a></li>
+    {% endif %}
+  {% endfor %}
+    <li {%if current_page == pages|length %} class="disabled" {% else %} class="waves-effect" {% endif %}>
+      <a href="/list/{{pages|length|add:"-1"}}"><i class="mdi-navigation-chevron-right"></i></a>
+      </li>
+   </ul>
 
-{% for i in pages %}
-  {% if current_page != i %}
-    <a href="/list/{{i}}">{{i}}</a>
-  {% else %}
-    {{i}}
-  {% endif %}
-{% endfor %}
+{% else %}
+  Il n'y a pas d'annonce disponible. <br />
+  <a href="/create" class="waves-effect waves-light btn-large">Créez votre annonce !</a>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="/stylesheets/intra.css" />
+{% endblock %}
+{% block script %}
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+  <script type="text/javascript">
+   $().ready(function() {
+      $(".button-collapse").sideNav({'edge': 'left'});
+    });
+  </script>
+{% endblock %}
+{% block body %}
+
+
+    <header>
+      <nav class="top-nav">
+          <div class="container">
+          <div class="nav-wrapper"><a class="page-title">{% block currentTitle %}{% endblock %}</a></div>
+        </div>
+      </nav>
+      <ul id="nav-mobile" class="side-nav fixed">
+        <li class="logo"><a id="logo-container" href="/">SWOP IT.</a></li>
+        <li class="bold"><a href="/create" class="waves-effect waves-teal">Créer une annonce</a></li>
+        <li class="bold"><a href="/manage" class="waves-effect waves-teal">Gérer mes annonces</a></li>
+        <li class="bold"><a href="/logout" class="waves-effect waves-teal">Deconnexion</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+    </header>
+
+
+    <main>
+      <div class="container">
+      {% block content %}
+    
+      {% endblock %}
+      </div>
+    </main>
+{% endblock %}

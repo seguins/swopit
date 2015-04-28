@@ -5,6 +5,9 @@ from webapp2_extras import security
 
 class User(User):
   number_card = ndb.StringProperty(indexed=True)
+  lastname = ndb.StringProperty(indexed=False)
+  firstname = ndb.StringProperty(indexed=False)
+  phone = ndb.StringProperty(indexed=False)
 
   def set_password(self, raw_password):
     self.password = security.generate_password_hash(raw_password, length=12)
@@ -26,7 +29,7 @@ class User(User):
     return len(user) == 1
 
 class Ad(ndb.Model):
-  user = ndb.StringProperty()
+  user = ndb.KeyProperty(kind='User')
   title = ndb.StringProperty()
   info = ndb.TextProperty()
   created = ndb.DateTimeProperty(auto_now_add=True)

@@ -1,20 +1,38 @@
+html {
+	height: 100%;
+}
+
 html, body {
 	margin: 0;
 	padding: 0;
+	width: 100%;
 }
 
-#overlay {
-	display: flex;
-	align-items: center;
-	justify-content: center;
+body {
+	background: linear-gradient( rgba(25,29,34,1), rgba(25,29,34,0) ), url("background.jpg") no-repeat;
+	background-size: cover;
+	color: white;
+}
+
+body > div {
+	margin-top: 5%;
+} 
+
+#content {
+	width: 100%;
+}
+
+h1 {
+	font-size: 400%;
+}
+
+.row {
+	padding-top: 5%;
+}
+
+#credit {
 	position: absolute;
-	z-index: 0;
-	top: 0;
 	right: 0;
-	bottom: 40%;
-	left: 0;
-	text-align: center;
-}
-
-.content {
+	bottom: 0;
+	padding: 10px;
 }

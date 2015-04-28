@@ -1,5 +1,5 @@
 from commons.base_handler import *
-from commons.models import Ad
+from commons.models import *
 from google.appengine.api import images
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
@@ -15,11 +15,18 @@ class ListHandler(BaseHandler):
       page_number = 0
     offset = page_number * self.NUMBER_ELEMENT_PER_PAGE;
     query = Ad.query().order(-Ad.created)
-    ads = query.fetch(self.NUMBER_ELEMENT_PER_PAGE, offset=offset) 
+    ads = query.fetch(self.NUMBER_ELEMENT_PER_PAGE, offset=offset)
+
+    for ad in ads:
+      if ad.user != None:
+        u = ad.user.get()
+        ad.email = u.email_address
+        ad.phone = u.phone
+
     self.render_template('list.html', {
       'ads': ads,
-      'current_page': page_number,
-      'pages': range(int(math.ceil(float(query.count()) / float(self.NUMBER_ELEMENT_PER_PAGE))))
+      'current_page': page_number + 1,
+      'pages': range(1, int(math.ceil(float(query.count()) / float(self.NUMBER_ELEMENT_PER_PAGE))) + 1)
       })
 
 class LogoutHandler(BaseHandler):
@@ -43,10 +50,11 @@ class CreateHandler(BaseHandler):
     # Get image data
     image = self.request.get('file')
     # Transform the image
-    image = images.resize(image, 1800, 200)
+    image = images.resize(image, 400, 320)
     
     # Create and save into datastore
-    ad = Ad(title=title, info=info, image=image)
+    print self.user_info
+    ad = Ad(title=title, info=info, image=image, user=self.user.key)
     ad.put()
     
     # Redirect to the product page
@@ -78,3 +86,7 @@ class ImageHandler(webapp2.RequestHandler):
         self.response.out.write(greeting.image)
     else:
         self.response.out.write('No image')
+
+class ManageHandler(webapp2.RequestHandler):
+  def get(self):
+    self.redirect('/')
