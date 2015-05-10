@@ -1,0 +1,80 @@
+html {
+  height: 100%;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+body {
+  background-image: url("degrad.png");
+  background-repeat: repeat;
+}
+
+h1, h1 a, h1 a:hover {
+  color: #92d050;
+  text-decoration: none;
+}
+
+h1 span {
+  color: #009999;
+  margin-left: 65px;
+}
+
+#content {
+  width: 100%;
+  background-color: rgba(157, 249, 37, 0.5);
+}
+
+.circle {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  background-color: #04aaa4;
+  border: 1px solid #8cc23c;
+}
+
+.circle.green {
+  background-color: #8cc23c;
+  border: 1px solid #04aaa4;  
+}
+
+.circle a {
+  line-height: 200px;
+  color: white;
+  font-size: 30px;
+}
+
+h2 {
+  text-align: center;
+  color: #1ba599;
+}
+
+.col-md-6:nth-of-type(2) {
+  border-left: 2px solid #1ba599;
+}
+
+.submitBlock {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.btn-blue {
+  color: white;
+  background-color: #1ba599;
+  border-color: #ccc;
+}
+
+.container {
+  padding: 0 !important;
+}
+
+.blueTitle {
+  color: #92d050;
+}
+
+.greenTitle {
+  color: #009999;
+}

@@ -1,53 +1,92 @@
-{% extends "intra.html" %}
+{% extends "page_structure.html" %}
 
 {% block currentTitle %}Liste des annonces{% endblock %}
 
+{% block script %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block searchSpace %}
+  <form class="navbar-form navbar-left" role="search">
+    <div class="form-group">
+      <input type="text" class="form-control" placeholder="Search">
+    </div>
+    <button type="submit" class="btn btn-blue">GO</button>
+  </form>
+{% endblock %}
+              
+
 {% block content %}
+
+<h2>Prendre un meuble</h2>
+
 
 {% if ads|length != 0 %}
 
   {% for ad in ads %}
-    <div class="row ad">
-      <div class="col s12 m4 l3"> <!-- Note that "m4 l3" was added -->
-        <img src="/photo/{{ad.key.urlsafe}}" />
+
+    <div class="row">
+      <div class="col-xs-6 col-md-3">
+        <span class="thumbnail">
+          <img src="/photo/{{ad.key.urlsafe}}" />
+        </span>
       </div>
-      <div class="col s12 m8 l9 "> 
+      <div class="col-md-9">
         <div class="row">
-          <div class="col s9 adTitle">{{ad.title}}</div>
-          <div class="col s2">
-            <a class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="50"
-              href="mailto:{{ad.email}}?Subject=[SWOPIT] {{ad.title}}" target="_blank"
-              data-tooltip="{{ad.email}} - {{ad.phone}}">
-            
-              Contacter l'anonceur
-            </a></div>
-          <div class="col s12">{{ad.info}}</div>
+          <div class="col-md-9 adTitle">{{ad.title}}</div>
+          <div class="col-md-2">
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                Contacter l'anonceur <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li>
+                  <a href="mailto:{{ad.email}}?Subject=[SWOPIT] {{ad.title}}" target="_blank">
+                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    {{ad.email}}
+                  </a>
+                </li>
+                <li>
+                  <a href="#"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                  {{ad.phone}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-12">{{ad.info}}</div>
         </div>
-      </div>
+        </div>
     </div>
     <hr />
   {% endfor %}
 
 
-  <ul class="pagination">
-      <li {%if current_page == 1 %} class="disabled" {% else %} class="waves-effect" {% endif %}>
-        <a href="/list/0"><i class="mdi-navigation-chevron-left"></i>
-      </a></li>
-  {% for i in pages %}
-    {% if current_page != i %}
-      <li class="waves-effect"><a href="/list/{{i|add:"-1"}}">{{i}}</a></li>
-    {% else %}
-      <li class="active"><a href="#!">{{i}}</a></li>
-    {% endif %}
-  {% endfor %}
-    <li {%if current_page == pages|length %} class="disabled" {% else %} class="waves-effect" {% endif %}>
-      <a href="/list/{{pages|length|add:"-1"}}"><i class="mdi-navigation-chevron-right"></i></a>
+  <nav>
+    <ul class="pagination">
+      <li {%if current_page == 1 %} class="disabled" {% endif %} >
+        <a href="/list/{{current_page|add:"-2"}}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
       </li>
-   </ul>
+      {% for i in pages %}
+        {% if current_page != i %}
+          <li><a href="/list/{{i|add:"-1"}}">{{i}}</a></li>
+        {% else %}
+          <li class="active"><a href="#!">{{i}}</a></li>
+        {% endif %}
+      {% endfor %}
+      <li {%if current_page == pages|length %} class="disabled" {% endif %} >
+        <a href="/list/{{pages|length|add:"-1"}}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 
 {% else %}
   Il n'y a pas d'annonce disponible. <br />
   <a href="/create" class="waves-effect waves-light btn-large">Créez votre annonce !</a>
 {% endif %}
 
-{% endblock %}
+{% endblock %}3

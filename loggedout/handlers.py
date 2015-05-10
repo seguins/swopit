@@ -69,4 +69,4 @@ class MainHandler(BaseHandler):
     if not self.auth.get_user_by_session():
       self.render_template('index.html')
     else:
-      self.redirect('/list')
+      self.render_template('choice.html')

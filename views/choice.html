@@ -1,0 +1,62 @@
+{% extends "page_structure.html" %}
+
+{% block head %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="stylesheets/choice.css" />
+{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block content %}
+
+<div class="row" id="rowChoice">
+  <div class="col-md-6">
+    <a href="/list">
+      <div class="circle green">
+        <svg
+           xmlns:cc="http://creativecommons.org/ns#"
+           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+           xmlns:svg="http://www.w3.org/2000/svg"
+           xmlns="http://www.w3.org/2000/svg"
+           width="100%"
+           height="100%"
+           viewBox="0 0 680.31491 871.65353">
+          <g transform="translate(0,-180.70873)">
+            <path
+               style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.84258378px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               d="M -0.31447981,180.52812 335.36931,344.43665 679.62038,180.90569 340.40965,1052.1378 -0.07859881,180.88565"
+             />
+          </g>
+        </svg>
+      </div>
+    </a>
+    <h2>Prendre</h2>
+  </div>
+  <div class="col-md-6">
+    <a href="/create">
+      <div class="circle">
+        <svg
+           xmlns:cc="http://creativecommons.org/ns#"
+           xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+           xmlns:svg="http://www.w3.org/2000/svg"
+           xmlns="http://www.w3.org/2000/svg"
+           width="100%"
+           height="100%"
+           viewBox="0 0 680.31491 871.65353"
+           id="svg2"
+           version="1.1">
+          <g transform="translate(0,-180.70873)">
+            <path
+               style="fill:#ffffff;fill-rule:evenodd;stroke:#000000;stroke-width:0.84258378px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+               d="M 682.50973,1051.0374 345.96572,888.90247 2.5823447,1054.2477 337.19115,181.23777 682.27197,1050.6811"
+              />
+          </g>
+        </svg>
+      </div>
+    </a>
+    <h2>Donner</h2>
+  </div>
+</div>
+
+
+{% endblock %}

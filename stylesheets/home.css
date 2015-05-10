@@ -1,38 +1,36 @@
-html {
-	height: 100%;
-}
-
-html, body {
-	margin: 0;
-	padding: 0;
-	width: 100%;
-}
 
 body {
-	background: linear-gradient( rgba(25,29,34,1), rgba(25,29,34,0) ), url("background.jpg") no-repeat;
-	background-size: cover;
-	color: white;
-}
-
-body > div {
-	margin-top: 5%;
+	text-align: center;
 } 
-
-#content {
-	width: 100%;
-}
 
 h1 {
 	font-size: 400%;
 }
 
-.row {
-	padding-top: 5%;
+.wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
 }
 
-#credit {
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	padding: 10px;
+svg, .circle {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+svg {
+  max-height: 65%;
+  max-width: calc(90% - 400px); 
+}
+
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px) {
+    svg {
+      display: none;
+    }
 }

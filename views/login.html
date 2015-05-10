@@ -1,12 +1,24 @@
-{% extends "login-template.html" %}
-{% block form-content %}
+{% extends "page_structure.html" %}
+
+{% block head %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="stylesheets/login.css" />
+{% endblock %}
+
+{% block content %}
+<h2>Connexion</h2>
   <form class="form" action= "/login" method="POST">
-      <label for="username">Email</label>
-      <input type="text" value="{{ username }}" name="username"/>
-      <label for="password">Password</label>
-      <input type="password" name="password"/>
-      <button type="submit" class="btn">Se connecter</button>
-  </form>
-  <a href="/forgot">Mot de passe oublié ?</a> <br />
-  <a href="/signup">S'inscrire ?</a>
+      <div class="form-group">
+        <label for="username">Email</label>
+        <input type="text" class="form-control"  value="{{ username }}" name="username"/>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" name="password"/>   
+      </div>
+      <div class="submitBlock">
+        <button type="submit" class="btn btn-blue">GO</button>
+      </div>
+    </form>
+  <a href="/forgot">Mot de passe oublié ?</a> / <a href="/signup">S'inscrire ?</a>
 {% endblock %}
