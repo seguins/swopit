@@ -64,6 +64,14 @@ class SigninHandler(BaseHandler):
     else:
       self.redirect('/signup')
 
+class LegalHandler(BaseHandler):
+  def get(self):
+    self.render_template('legal.html')
+
+class AboutHandler(BaseHandler):
+  def get(self):
+    self.render_template('about.html')
+
 class MainHandler(BaseHandler):
   def get(self):
     if not self.auth.get_user_by_session():

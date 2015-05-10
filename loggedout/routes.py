@@ -6,7 +6,9 @@ _routes = [
   RedirectRoute('/', handlers.MainHandler, name='home', strict_slash=True),
   RedirectRoute('/signin', handlers.SigninHandler, name='signin', strict_slash=True),
   RedirectRoute('/signup', handlers.SignupHandler, name='signup', strict_slash=True),
-  RedirectRoute('/login', handlers.LoginHandler, name='login', strict_slash=True)
+  RedirectRoute('/login', handlers.LoginHandler, name='login', strict_slash=True),
+  RedirectRoute('/about', handlers.AboutHandler, name='about', strict_slash=True),
+  RedirectRoute('/legal', handlers.LegalHandler, name='legal', strict_slash=True)
 ]
 
 

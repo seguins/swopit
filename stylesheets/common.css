@@ -49,7 +49,7 @@ h1 span {
 
 h2 {
   text-align: center;
-  color: #1ba599;
+  color: #1ba599 !important;
 }
 
 .col-md-6:nth-of-type(2) {
@@ -77,4 +77,13 @@ h2 {
 
 .greenTitle {
   color: #009999;
+}
+
+footer {
+  text-align: right;
+  padding-right: 20px;
+}
+
+footer a {
+ color: gray;
 }

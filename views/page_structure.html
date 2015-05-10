@@ -2,6 +2,10 @@
 {% block head %}
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 {% endblock %}
+{% block script %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+{% endblock %}
 {% block body %}
   <h1 class="hidden-xs"><a href="/">Stan'Ton<br /><span>Meuble</span></a></h1>
   <div id="content">
@@ -59,4 +63,8 @@
       {% endblock %}
     </div>
   </div>
+  <footer>
+    <a href="/about">Qui sommes nous ?</a>
+    <a href="/legal">Mentions Légales</a>
+  </footer>
 {% endblock %}
