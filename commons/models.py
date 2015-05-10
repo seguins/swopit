@@ -3,6 +3,10 @@ from webapp2_extras.appengine.auth.models import User
 from google.appengine.ext import ndb
 from webapp2_extras import security
 
+global categories
+categories = ["tables", "chaises"]
+  
+
 class User(User):
   number_card = ndb.StringProperty(indexed=True)
   lastname = ndb.StringProperty(indexed=False)
@@ -25,7 +29,7 @@ class User(User):
 
   @classmethod
   def user_exist(cls, card_id):
-    user = cls.query(cls.number_card == card_id).fetch(1);
+    user = cls.query(cls.number_card == card_id).fetch(1)
     return len(user) == 1
 
 class Ad(ndb.Model):
@@ -34,3 +38,4 @@ class Ad(ndb.Model):
   info = ndb.TextProperty()
   created = ndb.DateTimeProperty(auto_now_add=True)
   image = ndb.BlobProperty()
+  category = ndb.IntegerProperty()

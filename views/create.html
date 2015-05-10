@@ -19,6 +19,14 @@
         <textarea name="info" id="info" class="form-control" rows="3"></textarea>
       </div>
       <div class="form-group">
+        <label for="category">Catégorie</label>
+        <select class="form-control" name="category">
+          {% for category in categories %}
+            <option value="{{category}}">{{category}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
           <label for="file">Photo</label>
           <input type="file" name="file" />
       </div>

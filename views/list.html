@@ -8,10 +8,15 @@
 {% endblock %}
 
 {% block searchSpace %}
-  <form class="navbar-form navbar-left" role="search">
-    <div class="form-group">
-      <input type="text" class="form-control" placeholder="Search">
-    </div>
+  <form class="navbar-form navbar-left" role="search"  action="/filterCategory" method="POST">
+    <select name="category" class="form-control">
+      {% for category in categories %}
+        <option value="{{category}}"
+          {% if category != -1 and categoryStr == category %}selected="selected"{% endif %}>
+          {{category}}
+        </option>
+      {% endfor %}
+    </select>
     <button type="submit" class="btn btn-blue">GO</button>
   </form>
 {% endblock %}
@@ -19,7 +24,7 @@
 
 {% block content %}
 
-<h2>Prendre un meuble</h2>
+<h2>Prendre un meuble {% if category != -1 %}({{categoryStr}}){% endif %}</h2>
 
 
 {% if ads|length != 0 %}
@@ -65,19 +70,19 @@
   <nav>
     <ul class="pagination">
       <li {%if current_page == 1 %} class="disabled" {% endif %} >
-        <a href="/list/{{current_page|add:"-2"}}" aria-label="Previous">
+        <a {%if current_page != 1 %}href="/list/{{current_page|add:"-2"}}{% if category != -1 %}/{{category}}{% endif %}"{% endif %} aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
       {% for i in pages %}
         {% if current_page != i %}
-          <li><a href="/list/{{i|add:"-1"}}">{{i}}</a></li>
+          <li><a href="/list/{{i|add:"-1"}}{% if category != -1 %}/{{category}}{% endif %}">{{i}}</a></li>
         {% else %}
           <li class="active"><a href="#!">{{i}}</a></li>
         {% endif %}
       {% endfor %}
       <li {%if current_page == pages|length %} class="disabled" {% endif %} >
-        <a href="/list/{{pages|length|add:"-1"}}" aria-label="Next">
+        <a {%if current_page != pages|length %}href="/list/{{current_page}}{% if category != -1 %}/{{category}}{% endif %}"{% endif %} aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>

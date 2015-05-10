@@ -8,13 +8,16 @@ import math
 
 class ListHandler(BaseHandler):
   NUMBER_ELEMENT_PER_PAGE = 2
-  def get(self, page_number):
+  def get(self, page_number, category = -1):
     if page_number != None:
       page_number = int(page_number.replace("/", ""))
     else:
       page_number = 0
     offset = page_number * self.NUMBER_ELEMENT_PER_PAGE;
-    query = Ad.query().order(-Ad.created)
+    if category == -1:
+      query = Ad.query().order(-Ad.created)
+    else:
+      query = Ad.query(Ad.category == int(category)).order(-Ad.created)
     ads = query.fetch(self.NUMBER_ELEMENT_PER_PAGE, offset=offset)
 
     for ad in ads:
@@ -23,11 +26,16 @@ class ListHandler(BaseHandler):
         ad.email = u.email_address
         ad.phone = u.phone
 
-    self.render_template('list.html', {
+    param = {
       'ads': ads,
       'current_page': page_number + 1,
+      'category': int(category),
       'pages': range(1, int(math.ceil(float(query.count()) / float(self.NUMBER_ELEMENT_PER_PAGE))) + 1)
-      })
+    }
+    if category != -1:
+      param["categoryStr"] = models.categories[int(category)];
+
+    self.render_template('list.html', param)
 
 class LogoutHandler(BaseHandler):
   def get(self):
@@ -46,15 +54,18 @@ class CreateHandler(BaseHandler):
     # Get informations
     info = self.request.get('info')
     title = self.request.get('title')
+    category = self.request.get('category')
 
     # Get image data
     image = self.request.get('file')
     # Transform the image
-    image = images.resize(image, 400, 320)
+    image = images.resize(image, 250, 320)
     
     # Create and save into datastore
-    print self.user_info
-    ad = Ad(title=title, info=info, image=image, user=self.user.key)
+    print category
+    print models.categories
+    print models.categories.index(category)
+    ad = Ad(title=title, info=info, image=image, user=self.user.key, category=categories.index(category))
     ad.put()
     
     # Redirect to the product page
@@ -90,3 +101,8 @@ class ImageHandler(webapp2.RequestHandler):
 class ManageHandler(webapp2.RequestHandler):
   def get(self):
     self.redirect('/')
+
+class FilterHandler(BaseHandler):
+  @user_required
+  def post(self):
+    self.redirect('/list/0/' + str(models.categories.index(self.request.get('category'))))

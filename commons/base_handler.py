@@ -67,6 +67,7 @@ class BaseHandler(webapp2.RequestHandler):
     user = self.user_info
     params['user'] = user
     params['url'] = self.request.url
+    params['categories'] = models.categories
     path = os.path.join(os.path.dirname(__file__), '../views', view_filename)
     self.response.out.write(template.render(path, params))
 
