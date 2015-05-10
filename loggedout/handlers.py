@@ -43,7 +43,7 @@ class SignupHandler(BaseHandler):
       unique_properties,
       email_address=email, password_raw=password,
       number_card=number_card, lastname=lastname, firstname=firstname,
-      phone=phone, verified=True)
+      phone=phone, displayPhone=(self.request.get('displayNumber') == 'on'), verified=True)
     if not user_data[0]: #user_data is a tuple
       self.response.headers['Content-Type'] = 'text/plain'
       self.response.write('Unable to create user for email %s because of \

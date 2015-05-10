@@ -12,6 +12,7 @@ class User(User):
   lastname = ndb.StringProperty(indexed=False)
   firstname = ndb.StringProperty(indexed=False)
   phone = ndb.StringProperty(indexed=False)
+  displayPhone = ndb.BooleanProperty(default=True)
 
   def set_password(self, raw_password):
     self.password = security.generate_password_hash(raw_password, length=12)

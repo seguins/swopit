@@ -19,13 +19,12 @@ class ListHandler(BaseHandler):
     else:
       query = Ad.query(Ad.category == int(category)).order(-Ad.created)
     ads = query.fetch(self.NUMBER_ELEMENT_PER_PAGE, offset=offset)
-
     for ad in ads:
       if ad.user != None:
         u = ad.user.get()
         ad.email = u.email_address
         ad.phone = u.phone
-
+        ad.displayPhone = u.displayPhone
     param = {
       'ads': ads,
       'current_page': page_number + 1,

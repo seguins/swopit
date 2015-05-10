@@ -47,10 +47,12 @@
                     {{ad.email}}
                   </a>
                 </li>
+                {% if ad.displayPhone %}
                 <li>
                   <a href="#"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
                   {{ad.phone}}</a>
                 </li>
+                {% endif %}
               </ul>
             </div>
           </div>
