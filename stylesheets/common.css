@@ -1,10 +1,7 @@
-html {
-  height: 100%;
-}
-
 html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
   width: 100%;
 }
 
@@ -24,7 +21,7 @@ h1 span {
 }
 
 #content {
-  width: 100%;
+  margin-bottom: 27px;
   background-color: rgba(157, 249, 37, 0.5);
 }
 
@@ -44,12 +41,13 @@ h1 span {
 .circle a {
   line-height: 200px;
   color: white;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 h2 {
   text-align: center;
   color: #1ba599 !important;
+  font-family: 'Lobster', cursive !important;
 }
 
 .col-md-6:nth-of-type(2) {
@@ -61,10 +59,13 @@ h2 {
   text-align: center;
 }
 
-.btn-blue {
+.btn.btn-blue {
   color: white;
   background-color: #1ba599;
   border-color: #ccc;
+  border-radius: 50%;
+  font-size: 15px;
+  font-family: 'Lobster', cursive !important;
 }
 
 .container {
@@ -81,9 +82,25 @@ h2 {
 
 footer {
   text-align: right;
-  padding-right: 20px;
+  position: absolute;
+  bottom: 5px;
+  right: 20px;
+}
+
+#wrapper {
+  position: relative;
+  min-height: 100%;
+}
+
+#wrapper > h1 {
+  margin: 0;
+  padding: 30px;
 }
 
 footer a {
  color: gray;
+}
+
+.containerContent {
+  padding: 0 20px;
 }

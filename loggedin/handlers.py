@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from commons.base_handler import *
 from commons.models import *
 from google.appengine.api import images
@@ -7,7 +8,7 @@ from google.appengine.ext import ndb, db
 import math
 
 class ListHandler(BaseHandler):
-  NUMBER_ELEMENT_PER_PAGE = 2
+  NUMBER_ELEMENT_PER_PAGE = 10
   def get(self, page_number, category = -1):
     if page_number != None:
       page_number = int(page_number.replace("/", ""))

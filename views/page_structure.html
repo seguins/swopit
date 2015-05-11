@@ -1,70 +1,75 @@
 {% extends "base.html" %}
 {% block head %}
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 {% endblock %}
 {% block script %}
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 {% endblock %}
 {% block body %}
+<div id="wrapper">
   <h1 class="hidden-xs"><a href="/">Stan'Ton<br /><span>Meuble</span></a></h1>
-  <div id="content">
-    <div class="container">
-      {% block navbar %}
-      {% if user %}
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header visible-xs">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#"><span class="blueTitle">Stan'Ton</span> <span class="greenTitle">Meuble</span></a>
-            </div>
+  <div class="container">
+    <div id="content" role="main">
+        {% block navbar %}
+        {% if user %}
+          <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header visible-xs">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><span class="blueTitle">Stan'Ton</span> <span class="greenTitle">Meuble</span></a>
+              </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                <li {% if 'list' in url %}class="active"{% endif %}>
-                  <a href="/list">
-                    Prendre
-                    {% if 'list' in url %}<span class="sr-only">(current)</span>{% endif %}
-                  </a>
-                </li>
-                <li {% if 'create' in url %}class="active"{% endif %}>
-                  <a href="/create">
-                    Donner
-                    {% if 'create' in url %}<span class="sr-only">(current)</span>{% endif %}
-                  </a>
-                </li>
-              </ul>
-              {% block searchSpace %}
-              {% endblock %}
-              <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.firstname}} <span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Mon compte</a></li>
-                    <li><a href="#">Voir mes annonces</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/logout">Se déconnecter</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
-      {% endif %}
-      {% endblock %}
-      {% block content %}
-      {% endblock %}
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  <li {% if 'list' in url %}class="active"{% endif %}>
+                    <a href="/list">
+                      Prendre
+                      {% if 'list' in url %}<span class="sr-only">(current)</span>{% endif %}
+                    </a>
+                  </li>
+                  <li {% if 'create' in url %}class="active"{% endif %}>
+                    <a href="/create">
+                      Donner
+                      {% if 'create' in url %}<span class="sr-only">(current)</span>{% endif %}
+                    </a>
+                  </li>
+                </ul>
+                {% block searchSpace %}
+                {% endblock %}
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.firstname}} <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#">Mon compte</a></li>
+                      <li><a href="#">Voir mes annonces</a></li>
+                      <li class="divider"></li>
+                      <li><a href="/logout">Se déconnecter</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+          </nav>
+        {% endif %}
+        {% endblock %}
+        <div class="containerContent">
+          {% block content %}
+          {% endblock %}
+        </div>
+      </div>
     </div>
-  </div>
   <footer>
     <a href="/about">Qui sommes nous ?</a>
     <a href="/legal">Mentions Légales</a>
   </footer>
+</div>
 {% endblock %}

@@ -1,11 +1,12 @@
+# -*- coding: utf-8 -*-
 import time
 from webapp2_extras.appengine.auth.models import User
 from google.appengine.ext import ndb
 from webapp2_extras import security
 
 global categories
-categories = ["tables", "chaises"]
-  
+categories = ["Salon", "Cuisine", "Chambre", "Bureau", "Salle de bain", "Petit décoration", "Equipement loisirs"]
+
 
 class User(User):
   number_card = ndb.StringProperty(indexed=True)

@@ -3,8 +3,19 @@ body {
 	text-align: center;
 } 
 
+@font-face {
+    font-family: teamspir;
+    src: url(teamspir.ttf);
+}
+
 h1 {
-	font-size: 400%;
+  font-size: 500%;
+  font-family: teamspir;
+  margin: 0;
+}
+
+h1 > span {
+  margin-left: 240px;
 }
 
 .wrapper {
@@ -17,20 +28,62 @@ h1 {
   width: 100%;
 }
 
-svg, .circle {
+svg, .circleParent {
   display: inline-block;
   vertical-align: middle;
+  position: relative;
+}
+
+.circle {
+  position: absolute;
+  right: -160px;
+  bottom: 75px;
+  width: 200px;
+  height: 200px;
+}
+
+.circleParent:nth-child(4) .circle {
+  right: inherit;
+  left: -160px;
+}
+
+
+.circle a {
+  font-family: teamspir;
+  font-size: 45px;
+}
+
+.circle a {
+  line-height: 200px;
 }
 
 svg {
-  max-height: 65%;
+  max-height: 75%;
   max-width: calc(90% - 400px); 
 }
 
 @media only screen 
   and (min-device-width: 320px) 
   and (max-device-width: 480px) {
-    svg {
+
+    h1 > span {
+      margin-left: 0;
+    }
+
+    .circleParent {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .circle {
+      position: relative;
+      top: 15px;
+      display: inline-block;
+      left: 0 !important;
+    }
+
+    svg, #credit {
       display: none;
     }
 }

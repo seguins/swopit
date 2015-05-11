@@ -7,7 +7,8 @@
 
 {% block content %}
 <h2>Connexion</h2>
-  <form class="form" action= "/login" method="POST">
+<div class="row">
+  <form class="form col-md-6 col-md-offset-3" action= "/login" method="POST">
       <div class="form-group">
         <label for="username">Email</label>
         <input type="text" class="form-control"  value="{{ username }}" name="username"/>
@@ -20,5 +21,8 @@
         <button type="submit" class="btn btn-blue">GO</button>
       </div>
     </form>
+</div>
+<div class="text-center">
   <a href="/forgot">Mot de passe oublié ?</a> / <a href="/signup">S'inscrire ?</a>
+</div>
 {% endblock %}
