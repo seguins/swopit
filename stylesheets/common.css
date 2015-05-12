@@ -31,6 +31,7 @@ h1 span {
   height: 200px;
   background-color: #04aaa4;
   border: 1px solid #8cc23c;
+  z-index: 10;
 }
 
 .circle.green {

@@ -1,8 +1,15 @@
 {% extends "page_structure.html" %}
 
-{% block currentTitle %}Liste des annonces{% endblock %}
+{% block currentTitle %}
+  {% if manage == True %}
+  Mes annonces
+  {% else %}
+  Liste des annonces
+  {% endif %}
+{% endblock %}
 
 {% block searchSpace %}
+  {% if not manage %}
   <form class="navbar-form navbar-left" role="search"  action="/filterCategory" method="POST">
     <select name="category" class="form-control">
       {% for category in categories %}
@@ -14,18 +21,62 @@
     </select>
     <button type="submit" class="btn btn-blue">GO</button>
   </form>
+  {% endif %}
 {% endblock %}
-              
+
+{% block script %}
+  {{ block.super }}
+  {% if manage %}
+  <script>
+    $(function() {
+      $('#removeModal').on('show.bs.modal', function (event) {
+        console.log("moi");
+        var button = $(event.relatedTarget) 
+        var recipient = button.data('idad')
+        var modal = $(this)
+        console.log("pouet");
+        console.log(recipient);
+        modal.find('a').attr("href", "/delete/" + recipient);
+      });
+    });
+  </script>
+  {% endif %}
+{% endblock %}
 
 {% block content %}
 
-<h2>Prendre un meuble {% if category != -1 %}({{categoryStr}}){% endif %}</h2>
+{% if manage %}
+  <h2>Mes annonces</h2>
+  <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Suppression d'une annonce</h4>
+        </div>
+        <div class="modal-body">
+          Etes-vous sûr de vouloir supprimer cette annonce ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+          <a href="/delete/"class="btn btn-danger">Confirmer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{% else %}
+  <h2>Prendre un meuble {% if category != -1 %}({{categoryStr}}){% endif %}</h2>
+{% endif %}
+
 
 
 {% if ads|length != 0 %}
+  {% if manage %}
+    <a href="/create" class="btn-large">Créez une nouvelle annonce !</a>
+    <hr />
+  {% endif %}
 
   {% for ad in ads %}
-
     <div class="row">
       <div class="col-xs-6 col-md-3">
         <span class="thumbnail">
@@ -37,23 +88,29 @@
           <div class="col-md-9 adTitle"><h4>{{ad.title}}</h4></div>
           <div class="col-md-2">
             <div class="btn-group">
-              <button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                Contacter l'anonceur <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li>
-                  <a href="mailto:{{ad.email}}?Subject=[SWOPIT] {{ad.title}}" target="_blank">
-                    <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
-                    {{ad.email}}
-                  </a>
-                </li>
-                {% if ad.displayPhone %}
-                <li>
-                  <a href="#"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
-                  {{ad.phone}}</a>
-                </li>
-                {% endif %}
-              </ul>
+              {% if manage %}
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal" data-idad="{{ad.key.urlsafe}}">
+                  Supprimer l'annonce
+                </button>
+              {% else %}
+                <button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  Contacter l'anonceur <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <a href="mailto:{{ad.email}}?Subject=[SWOPIT] {{ad.title}}" target="_blank">
+                      <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                      {{ad.email}}
+                    </a>
+                  </li>
+                  {% if ad.displayPhone %}
+                  <li>
+                    <a href="#"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                    {{ad.phone}}</a>
+                  </li>
+                  {% endif %}
+                </ul>
+              {% endif %}
             </div>
           </div>
           <div class="col-md-12">{{ad.info}}</div>
@@ -67,19 +124,19 @@
   <nav class="text-center">
     <ul class="pagination">
       <li {%if current_page == 1 %} class="disabled" {% endif %} >
-        <a {%if current_page != 1 %}href="/list/{{current_page|add:"-2"}}{% if category != -1 %}/{{category}}{% endif %}"{% endif %} aria-label="Previous">
+        <a {%if current_page != 1 %}href="/{% if manage %}manage{%else%}list{%endif%}/{{current_page|add:"-2"}}{% if category != -1 and not manage %}/{{category}}{% endif %}"{% endif %} aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
       {% for i in pages %}
         {% if current_page != i %}
-          <li><a href="/list/{{i|add:"-1"}}{% if category != -1 %}/{{category}}{% endif %}">{{i}}</a></li>
+          <li><a href="/{% if manage %}manage{%else%}list{%endif%}/{{i|add:"-1"}}{% if category != -1 and not manage %}/{{category}}{% endif %}">{{i}}</a></li>
         {% else %}
           <li class="active"><a href="#!">{{i}}</a></li>
         {% endif %}
       {% endfor %}
       <li {%if current_page == pages|length %} class="disabled" {% endif %} >
-        <a {%if current_page != pages|length %}href="/list/{{current_page}}{% if category != -1 %}/{{category}}{% endif %}"{% endif %} aria-label="Next">
+        <a {%if current_page != pages|length %}href="/{% if manage %}manage{%else%}list{%endif%}/{{current_page}}{% if category != -1 and not manage %}/{{category}}{% endif %}"{% endif %} aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
@@ -88,7 +145,7 @@
 
 {% else %}
   Il n'y a pas d'annonce disponible. <br />
-  <a href="/create" class="waves-effect waves-light btn-large">Créez votre annonce !</a>
+  <a href="/create" class="btn-large">Créez votre annonce !</a>
 {% endif %}
 
 {% endblock %}3
