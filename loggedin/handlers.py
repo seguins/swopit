@@ -90,7 +90,7 @@ class CreateHandler(BaseHandler):
     image = images.resize(image, 250, 320)
     
     # Create and save into datastore
-    ad = Ad(title=title, info=info, image=image, user=self.user.key, category=categories.index(category))
+    ad = Ad(title=title, info=info, image=image, user=self.user.key, category=int(category))
     ad.put()
     
     # Redirect to the product page
@@ -159,4 +159,26 @@ class EditHandler(BaseHandler):
       ad.category = int(self.request.get('category'))
       ad.put()
     
+    self.redirect('/')
+
+class ProfileHandler(BaseHandler):
+  @user_required
+  def get(self):
+    self.render_template('signup.html', {'userEdition': self.user})
+  def post(self):
+    u = self.user
+    u.email_address = self.request.get('email')
+    u.username = self.request.get('email')
+    u.set_password(self.request.get('password'))
+    u.number_card = self.request.get('number_card')
+    u.lastname = self.request.get('lastname')
+    u.firstname = self.request.get('firstname')
+    u.phone = self.request.get('phone')
+    u.displayPhone = (self.request.get('displayNumber') != 'on')
+
+    u.put()
+
+    self.auth.get_user_by_password(u.username, self.request.get('password'), remember=True, save_session=True)
+
+
     self.redirect('/')

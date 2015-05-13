@@ -6,27 +6,31 @@
 {% endblock %}
 
 {% block content %}
-  <h2>Créer ton compte</h2>
-  <form action="/signup" method="POST">
+  {% if userEdition %}
+    <h2>Mon compte</h2>
+  {% else %}
+    <h2>Créer ton compte</h2>
+  {% endif %}
+  <form method="POST">
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
           <label for="number_card">Numero de carte étudiante</label>
-          <input type="text" class="form-control" value="{{ number_card }}" name="number_card" />
+          <input type="text" class="form-control" value="{{ userEdition.number_card }}" name="number_card" />
         </div>    
         <div class="form-group">
           <label for="lastname">Nom</label>
-          <input type="text" class="form-control" name="lastname" />
+          <input type="text" class="form-control" value="{{ userEdition.lastname }}" name="lastname" />
         </div>
         <div class="form-group">
           <label for="firstname">Prénom</label>
-          <input type="text" class="form-control" name="firstname" />
+          <input type="text" class="form-control" value="{{ userEdition.firstname }}" name="firstname" />
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="email">Addresse Email</label>
-          <input type="text" class="form-control" name="email" />
+          <input type="text" class="form-control" value="{{ userEdition.email_address }}" name="email" />
         </div>
         <div class="form-group">
           <label for="password">Mot de passe</label>
@@ -34,17 +38,21 @@
         </div>
         <div class="form-group">
           <label for="phone">Numéro de téléphone</label>
-          <input type="text" class="form-control" name="phone" />
+          <input type="text" class="form-control" value="{{ userEdition.phone }}" name="phone" />
         </div>
         <div class="checkbox">
           <label>
-            <input type="checkbox" name="displayNumber"> Masquer le numéro de téléphone dans l'annonce
+            <input type="checkbox" {% if userEdition.displayPhone == False %}checked=checked{% endif %} name="displayNumber"> Masquer le numéro de téléphone dans l'annonce
           </label>
         </div>
       </div>
       <div class="clearfix"></div>
       <div class="submitBlock">
-        <button type="submit" class="btn btn-blue">S'inscrire</button>
+        {% if userEdition %}
+          <button type="submit" class="btn btn-blue">Editier</button>
+        {% else %}
+          <button type="submit" class="btn btn-blue">S'inscrire</button>
+        {% endif %}
       </div>
     </div>
   </form>
