@@ -13,7 +13,6 @@ config = {
   }
 }
 
-
 application = webapp2.WSGIApplication(debug=True, config=config)
 
 loggedout_routes.add_routes(application)

@@ -2,8 +2,53 @@
 
 {% block currentTitle %}{% if ad %}Editer{% else %}Créer{% endif %} une annonce{% endblock %}
 
+
+{% block script %}
+  {{ block.super }}
+   {% if ad %}
+ <script>
+    $(function() {
+      $('#removeModal').on('show.bs.modal', function (event) {
+        console.log("moi");
+        var button = $(event.relatedTarget) 
+        var recipient = button.data('idad')
+        var modal = $(this)
+        console.log("pouet");
+        console.log(recipient);
+        modal.find('a').attr("href", "/delete/" + recipient);
+      });
+    });
+  </script>
+  {% endif %}
+{% endblock %}
+
+
 {% block content %}
   <h2>{% if ad %}Editer{% else %}Créer{% endif %} une annonce</h2>
+
+
+  {% if ad %}
+
+  <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">uppression d'une annonce</h4>
+        </div>
+        <div class="modal-body">
+          Etes-vous sûr de vouloir supprimer cette annonce ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+          <a href="/delete/"class="btn btn-danger">Confirmer</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+
   <form method="POST" enctype="multipart/form-data">
       {% if failed %}
         <div class="alert alert-danger" role="alert">
@@ -37,7 +82,9 @@
         {% endif %}
       </div>
       <div class="submitBlock">
-        <button class="btn btn-blue" type="submit" name="action">{% if ad %}Editer{% else %}Créer{% endif %} l'annonce</button>
+        <button class="btn btn-blue" type="submit" name="action">{% if ad %}Editer{% else %}Créer{% endif %} l'annonce</button><br />
+        {% if ad %}<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal" data-idad="{{ad.key.urlsafe}}">Supprimer l'annonce</button>
+{%endif %}
       </div>
   </form>
 </div>

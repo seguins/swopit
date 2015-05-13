@@ -105,7 +105,7 @@ class ForgetHandler(BaseHandler):
       user.put()
 
       message = mail.EmailMessage()
-      message.sender = "stephseguin93@gmail.com"
+      message.sender = os.environ['EMAIL_ADMIN']
       message.to = username
       message.subject = "Mot de passe oublié"
       message.body = """

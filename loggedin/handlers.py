@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 from commons.base_handler import *
 from commons.models import *
 from google.appengine.api import images
@@ -37,6 +38,8 @@ class ListHandler(BaseHandler):
     }
     if category != -1:
       param["categoryStr"] = models.categories[int(category)];
+    if  self.user.email_address == os.environ['EMAIL_ADMIN']:
+      param['root'] = True
 
     self.render_template('list.html', param)
 
@@ -126,27 +129,25 @@ class DeleteHandler(BaseHandler):
   def get(self, urlsafe):
     key = ndb.Key(urlsafe=urlsafe)
     ad = key.get()
-    if ad.user == self.user.key:
+    if ad and ad.user == self.user.key  or self.user.email_address == os.environ['EMAIL_ADMIN']:
       key.delete()
-    self.redirect('/manage/')
+    self.redirect('/manage')
 
 class ReportHandler(BaseHandler):
   @user_required
   def get(self, urlsafe):
     key = ndb.Key(urlsafe=urlsafe)
     ad = key.get()
-    if ad.user == self.user.key:
-      message = mail.EmailMessage()
-      message.sender = "stephseguin93@gmail.com"
-      message.to = "stephseguin93@gmail.com"
-      message.subject = "Signalement d'une annonce"
-      message.body = """
+    message = mail.EmailMessage()
+    message.sender = self.user.email_address
+    message.to = os.environ['EMAIL_ADMIN']
+    message.subject = "Signalement d'une annonce"
+    message.body = """
 L'annonce "%s" vient d'être reportée par %s
 
 Lien de l'annonce : %s/edit/%s
     """ % (str(ad.title), str(self.user.email_address), self.request.url.rsplit('/', 2)[0], urlsafe)
-      print(message.body)
-      message.send()
+    message.send()
     self.redirect('/')
 
 
@@ -155,7 +156,7 @@ class EditHandler(BaseHandler):
   def get(self, urlsafe):
     key = ndb.Key(urlsafe=urlsafe)
     ad = key.get()
-    if ad.user == self.user.key:
+    if ad and ad.user == self.user.key or self.user.email_address == os.environ['EMAIL_ADMIN']:
       self.render_template('create.html', {'ad': ad})
     else:
       self.redirect('/')
@@ -164,7 +165,7 @@ class EditHandler(BaseHandler):
   def post(self, urlsafe):
     key = ndb.Key(urlsafe=urlsafe)
     ad = key.get()
-    if ad.user == self.user.key:
+    if ad and ad.user == self.user.key or self.user.email_address == os.environ['EMAIL_ADMIN']:
       # Get informations
       ad.info = self.request.get('info')
       ad.title = self.request.get('title')

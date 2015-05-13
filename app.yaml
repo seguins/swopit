@@ -30,3 +30,6 @@ handlers:
 libraries:
 - name: webapp2
   version: latest
+
+env_variables:
+  EMAIL_ADMIN: 'stephseguin93@gmail.com'
