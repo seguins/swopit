@@ -26,7 +26,6 @@
 
 {% block script %}
   {{ block.super }}
-  {% if manage %}
   <script>
     $(function() {
       $('#removeModal').on('show.bs.modal', function (event) {
@@ -36,37 +35,41 @@
         var modal = $(this)
         console.log("pouet");
         console.log(recipient);
+        {% if manage %}
         modal.find('a').attr("href", "/delete/" + recipient);
+        {% else %}
+        modal.find('a').attr("href", "/report/" + recipient);
+        {% endif %}
       });
     });
   </script>
-  {% endif %}
 {% endblock %}
 
 {% block content %}
 
 {% if manage %}
   <h2>Mes annonces</h2>
+{% else %}
+  <h2>Prendre un meuble {% if category != -1 %}({{categoryStr}}){% endif %}</h2>
+{% endif %}
+
   <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Suppression d'une annonce</h4>
+          <h4 class="modal-title" id="myModalLabel">{% if manage %}Suppression d'{% else %}Signaler {% endif %}une annonce</h4>
         </div>
         <div class="modal-body">
-          Etes-vous sûr de vouloir supprimer cette annonce ?
+          Etes-vous sûr de vouloir {% if manage %}supprimer{% else %} signaler {% endif %} cette annonce ?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
-          <a href="/delete/"class="btn btn-danger">Confirmer</a>
+          <a href="/{%if manage %}delete{% else %}report{% endif %}/"class="btn btn-danger">Confirmer</a>
         </div>
       </div>
     </div>
   </div>
-{% else %}
-  <h2>Prendre un meuble {% if category != -1 %}({{categoryStr}}){% endif %}</h2>
-{% endif %}
 
 
 
@@ -108,6 +111,8 @@
                     <a href="#"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
                     {{ad.phone}}</a>
                   </li>
+                  <li class="divider"></li>
+                  <li><a data-toggle="modal" data-target="#removeModal" data-idad="{{ad.key.urlsafe}}">Signaler un abus</a></li>
                   {% endif %}
                 </ul>
               {% endif %}

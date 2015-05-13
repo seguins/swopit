@@ -105,8 +105,7 @@ Vous avez oublié votre mot de passe pour Stan'Ton Meuble.
 Cliquer sur le lien suivant pour le réinitialiser votre mot de passe : 
 %s/%s
     """ % (self.request.url, token)
-    print(message.body)
-    message.send()
+      message.send()
     self.redirect("/")
 
 class NewForgetHandler(BaseHandler):

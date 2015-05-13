@@ -5,6 +5,8 @@ from google.appengine.api import images
 from google.appengine.ext import blobstore
 from google.appengine.ext.webapp import blobstore_handlers
 from google.appengine.ext import ndb, db
+from google.appengine.api import mail
+
 import math
 
 NUMBER_ELEMENT_PER_PAGE = 5
@@ -119,3 +121,19 @@ class DeleteHandler(BaseHandler):
     if ad.user == self.user.key:
       key.delete()
     self.redirect('/manage/')
+
+class ReportHandler(BaseHandler):
+  @user_required
+  def get(self, urlsafe):
+    key = ndb.Key(urlsafe=urlsafe)
+    ad = key.get()
+    if ad.user == self.user.key:
+      
+      message = mail.EmailMessage()
+      message.sender = "stephseguin93@gmail.com"
+      message.to = "stephseguin93@gmail.com"
+      message.body = """
+L'annonce "%s" vient d'être reportée
+    """ % str(ad.title)
+      message.send()
+    self.redirect('/')

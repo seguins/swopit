@@ -10,7 +10,8 @@ _routes = [
   ('/list(/\d+)?', handlers.ListHandler),
   ('/list/(\d+)/(\d+)', handlers.ListHandler),
   ('/photo/([^/]+)?', handlers.ImageHandler),
-  ('/delete/([^/]+)?', handlers.DeleteHandler)
+  ('/delete/([^/]+)?', handlers.DeleteHandler),
+  ('/report/([^/]+)?', handlers.ReportHandler)
 ]
 
 def add_routes(app):
