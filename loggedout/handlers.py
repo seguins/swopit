@@ -1,8 +1,13 @@
+# -*- coding: utf-8 -*-
 from commons.base_handler import BaseHandler
 from commons.models import *
 
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
+
+from google.appengine.api import mail
+
+import uuid
 
 class LoginHandler(BaseHandler):
   def get(self):
@@ -78,3 +83,47 @@ class MainHandler(BaseHandler):
       self.render_template('index.html')
     else:
       self.render_template('choice.html')
+
+class ForgetHandler(BaseHandler):
+  def get(self):
+    self.render_template("forget.html")
+  
+  def post(self):
+    username = self.request.get('username')
+    user = self.user_model.get_user(username)
+    if (user != None):
+      token = str(uuid.uuid4())
+      user.token = token
+      user.put()
+
+      message = mail.EmailMessage()
+      message.sender = "stephseguin93@gmail.com"
+      message.to = username
+      message.body = """
+Vous avez oublié votre mot de passe pour Stan'Ton Meuble.
+
+Cliquer sur le lien suivant pour le réinitialiser votre mot de passe : 
+%s/%s
+    """ % (self.request.url, token)
+    print(message.body)
+    message.send()
+    self.redirect("/")
+
+class NewForgetHandler(BaseHandler):
+  def get(self, token):
+    u = User.user_by_token(token)
+    if u == None:
+      self.notfound()
+    else:
+      self.render_template("newForget.html")
+  
+  def post(self, token):
+    password = self.request.get('password')
+    u = User.user_by_token(token)
+    if u == None:
+      self.notfound()
+    else:
+      u.set_password(password)
+      u.token = None
+      u.put()
+      self.redirect("/")

@@ -8,7 +8,9 @@ _routes = [
   RedirectRoute('/signup', handlers.SignupHandler, name='signup', strict_slash=True),
   RedirectRoute('/login', handlers.LoginHandler, name='login', strict_slash=True),
   RedirectRoute('/about', handlers.AboutHandler, name='about', strict_slash=True),
-  RedirectRoute('/legal', handlers.LegalHandler, name='legal', strict_slash=True)
+  RedirectRoute('/legal', handlers.LegalHandler, name='legal', strict_slash=True),
+  RedirectRoute('/forget', handlers.ForgetHandler, name='forget', strict_slash=True),
+  ('/forget/([^/]+)?', handlers.NewForgetHandler)
 ]
 
 

@@ -9,11 +9,13 @@ categories = ["Salon", "Cuisine", "Chambre", "Bureau", "Salle de bain", "Petit d
 
 
 class User(User):
+  email_address = ndb.StringProperty(indexed=True)
   number_card = ndb.StringProperty(indexed=True)
   lastname = ndb.StringProperty(indexed=False)
   firstname = ndb.StringProperty(indexed=False)
   phone = ndb.StringProperty(indexed=False)
   displayPhone = ndb.BooleanProperty(default=True)
+  token = ndb.StringProperty()
 
   def set_password(self, raw_password):
     self.password = security.generate_password_hash(raw_password, length=12)
@@ -30,9 +32,24 @@ class User(User):
     return None, None
 
   @classmethod
-  def user_exist(cls, card_id):
-    user = cls.query(cls.number_card == card_id).fetch(1)
+  def user_exist(cls, email):
+    user = cls.query(cls.email_address == email).fetch(1)
     return len(user) == 1
+
+  @classmethod
+  def get_user(cls, email):
+    user = cls.query(cls.email_address == email).fetch(1)
+    if len(user) == 1:
+      return user[0]
+    return None
+
+  @classmethod
+  def user_by_token(cls, token):
+    user =  cls.query(cls.token == token).fetch(1)
+    if len(user) == 1:
+      return user[0]
+    return None
+
 
 class Ad(ndb.Model):
   user = ndb.KeyProperty(kind='User')
