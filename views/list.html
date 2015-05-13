@@ -12,8 +12,9 @@
   {% if not manage %}
   <form class="navbar-form navbar-left" role="search"  action="/filterCategory" method="POST">
     <select name="category" class="form-control">
+      <option disabled selected> -- Choisir une catégorie -- </option>
       {% for category in categories %}
-        <option value="{{category}}"
+        <option value="{{forloop.counter0}}"
           {% if category != -1 and categoryStr == category %}selected="selected"{% endif %}>
           {{category}}
         </option>
@@ -50,7 +51,7 @@
 {% if manage %}
   <h2>Mes annonces</h2>
 {% else %}
-  <h2>Prendre un meuble {% if category != -1 %}({{categoryStr}}){% endif %}</h2>
+  <h2>Prendre un bien{% if category != -1 %}({{categoryStr}}){% endif %}</h2>
 {% endif %}
 
   <div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

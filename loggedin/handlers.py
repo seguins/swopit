@@ -122,7 +122,7 @@ class ImageHandler(webapp2.RequestHandler):
 class FilterHandler(BaseHandler):
   @user_required
   def post(self):
-    self.redirect('/list/0/' + str(models.categories.index(self.request.get('category'))))
+    self.redirect('/list/0/' + self.request.get('category'))
 
 class DeleteHandler(BaseHandler):
   @user_required

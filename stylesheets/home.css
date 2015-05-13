@@ -3,14 +3,8 @@ body {
 	text-align: center;
 } 
 
-@font-face {
-    font-family: teamspir;
-    src: url(teamspir.ttf);
-}
-
 h1 {
   font-size: 500%;
-  font-family: teamspir;
   margin: 0;
 }
 
@@ -37,7 +31,7 @@ svg, .circleParent {
 .circle {
   position: absolute;
   right: -160px;
-  bottom: 75px;
+  bottom: 0;
   width: 200px;
   height: 200px;
 }

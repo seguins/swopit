@@ -8,7 +8,7 @@ from google.appengine.api import mail
 
 
 global categories
-categories = ["Salon", "Cuisine", "Chambre", "Bureau", "Salle de bain", "Petit décoration", "Equipement loisirs"]
+categories = ["Salon", "Cuisine", "Chambre", "Bureau", "Salle de bain", "Petite décoration", "Equipement loisirs"]
 
 
 class User(User):

@@ -2,11 +2,23 @@
 
 {% block currentTitle %}{% if ad %}Editer{% else %}Créer{% endif %} une annonce{% endblock %}
 
+{% block head %}
+  {{ block.super }}
+
+   {% if not ad %}
+    <style>
+      #imgUpload {
+        cursor: pointer;
+      }
+    </style>
+   {% endif %}
+{% endblock %}
+
 
 {% block script %}
   {{ block.super }}
+  <script>
    {% if ad %}
- <script>
     $(function() {
       $('#removeModal').on('show.bs.modal', function (event) {
         console.log("moi");
@@ -18,8 +30,12 @@
         modal.find('a').attr("href", "/delete/" + recipient);
       });
     });
+    {% else %}
+    $("#imgUpload").click(function() {
+      $("input[id='my_file']").click();
+    });
+    {% endif %}
   </script>
-  {% endif %}
 {% endblock %}
 
 
@@ -78,7 +94,8 @@
           L'image n'est pas éditable.
         {% else %}
           <label for="file">Photo</label>
-          <input type="file" name="file" />
+          <img id="imgUpload" src="/stylesheets/photo.png" width="60px" style="vertical-align: middle;"/>
+          <input type="file" name="file" id="my_file" style="display: none;" />
         {% endif %}
       </div>
       <div class="submitBlock">

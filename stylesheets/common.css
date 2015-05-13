@@ -1,3 +1,8 @@
+@font-face {
+    font-family: teamspir;
+    src: url(teamspir.ttf);
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -13,6 +18,7 @@ body {
 h1, h1 a, h1 a:hover {
   color: #92d050;
   text-decoration: none;
+  font-family: teamspir;
 }
 
 h1 span {
@@ -48,6 +54,10 @@ h1 span {
 h2 {
   text-align: center;
   color: #1ba599 !important;
+  font-family: 'Lobster', cursive !important;
+}
+
+h4 {
   font-family: 'Lobster', cursive !important;
 }
 
@@ -103,5 +113,5 @@ footer a {
 }
 
 .containerContent {
-  padding: 0 20px;
+  padding: 5px 20px;
 }

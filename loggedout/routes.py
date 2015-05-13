@@ -9,6 +9,7 @@ _routes = [
   RedirectRoute('/login', handlers.LoginHandler, name='login', strict_slash=True),
   RedirectRoute('/about', handlers.AboutHandler, name='about', strict_slash=True),
   RedirectRoute('/legal', handlers.LegalHandler, name='legal', strict_slash=True),
+  RedirectRoute('/condition', handlers.ConditionHandler, name='condition', strict_slash=True),
   RedirectRoute('/forget', handlers.ForgetHandler, name='forget', strict_slash=True),
   ('/forget/([^/]+)?', handlers.NewForgetHandler)
 ]
