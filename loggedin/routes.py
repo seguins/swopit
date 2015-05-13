@@ -11,7 +11,8 @@ _routes = [
   ('/list/(\d+)/(\d+)', handlers.ListHandler),
   ('/photo/([^/]+)?', handlers.ImageHandler),
   ('/delete/([^/]+)?', handlers.DeleteHandler),
-  ('/report/([^/]+)?', handlers.ReportHandler)
+  ('/report/([^/]+)?', handlers.ReportHandler),
+  ('/edit/([^/]+)?', handlers.EditHandler)
 ]
 
 def add_routes(app):

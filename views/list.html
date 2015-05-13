@@ -92,9 +92,16 @@
           <div class="col-md-2">
             <div class="btn-group">
               {% if manage %}
-                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#removeModal" data-idad="{{ad.key.urlsafe}}">
-                  Supprimer l'annonce
+                <button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  Action <span class="caret"></span>
                 </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <a href="/edit/{{ad.key.urlsafe}}">Editer l'annonce</a>
+                  </li>
+                  <li class="divider"></li>
+                  <li><a data-toggle="modal" data-target="#removeModal" data-idad="{{ad.key.urlsafe}}">Supprimer l'annonce</a></li>
+                </ul>
               {% else %}
                 <button type="button" class="btn btn-blue dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                   Contacter l'anonceur <span class="caret"></span>
@@ -111,9 +118,9 @@
                     <a href="#"><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
                     {{ad.phone}}</a>
                   </li>
+                  {% endif %}
                   <li class="divider"></li>
                   <li><a data-toggle="modal" data-target="#removeModal" data-idad="{{ad.key.urlsafe}}">Signaler un abus</a></li>
-                  {% endif %}
                 </ul>
               {% endif %}
             </div>

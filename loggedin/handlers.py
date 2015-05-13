@@ -128,7 +128,6 @@ class ReportHandler(BaseHandler):
     key = ndb.Key(urlsafe=urlsafe)
     ad = key.get()
     if ad.user == self.user.key:
-      
       message = mail.EmailMessage()
       message.sender = "stephseguin93@gmail.com"
       message.to = "stephseguin93@gmail.com"
@@ -136,4 +135,28 @@ class ReportHandler(BaseHandler):
 L'annonce "%s" vient d'être reportée
     """ % str(ad.title)
       message.send()
+    self.redirect('/')
+
+
+class EditHandler(BaseHandler):
+  @user_required
+  def get(self, urlsafe):
+    key = ndb.Key(urlsafe=urlsafe)
+    ad = key.get()
+    if ad.user == self.user.key:
+      self.render_template('create.html', {'ad': ad})
+    else:
+      self.redirect('/')
+
+  @user_required
+  def post(self, urlsafe):
+    key = ndb.Key(urlsafe=urlsafe)
+    ad = key.get()
+    if ad.user == self.user.key:
+      # Get informations
+      ad.info = self.request.get('info')
+      ad.title = self.request.get('title')
+      ad.category = int(self.request.get('category'))
+      ad.put()
+    
     self.redirect('/')

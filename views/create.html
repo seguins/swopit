@@ -1,32 +1,36 @@
 {% extends "page_structure.html" %}
 
-{% block currentTitle %}Créer une annonce{% endblock %}
+{% block currentTitle %}{% if ad %}Editer{% else %}Créer{% endif %} une annonce{% endblock %}
 
 {% block content %}
-  <h2>Créer une annonce</h2>
-  <form action= "/create" method="POST" enctype="multipart/form-data">
+  <h2>{% if ad %}Editer{% else %}Créer{% endif %} une annonce</h2>
+  <form method="POST" enctype="multipart/form-data">
       <div class="form-group">
         <label for="title">Nom du bien</label>
-        <input type="text" class="form-control" name="title"/>
+        <input type="text" class="form-control" value="{{ ad.title}}" name="title"/>
       </div>
       <div class="form-group">
         <label for="info">Informations :</label>
-        <textarea name="info" id="info" class="form-control" rows="3"></textarea>
+        <textarea name="info" id="info" class="form-control" rows="3">{{ ad.info }}</textarea>
       </div>
       <div class="form-group">
         <label for="category">Catégorie</label>
         <select class="form-control" name="category">
           {% for category in categories %}
-            <option value="{{category}}">{{category}}</option>
+            <option value="{{forloop.counter0}}" {% if ad.category == forloop.counter0 %}selected{% endif %}>{{category}}</option>
           {% endfor %}
         </select>
       </div>
       <div class="form-group">
+        {% if ad %}
+          L'image n'est pas éditable.
+        {% else %}
           <label for="file">Photo</label>
           <input type="file" name="file" />
+        {% endif %}
       </div>
       <div class="submitBlock">
-        <button class="btn btn-blue" type="submit" name="action">Créer l'annonce</button>
+        <button class="btn btn-blue" type="submit" name="action">{% if ad %}Editer{% else %}Créer{% endif %} l'annonce</button>
       </div>
   </form>
 </div>
