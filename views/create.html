@@ -5,15 +5,22 @@
 {% block content %}
   <h2>{% if ad %}Editer{% else %}Créer{% endif %} une annonce</h2>
   <form method="POST" enctype="multipart/form-data">
-      <div class="form-group">
+      {% if failed %}
+        <div class="alert alert-danger" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Erreur :</span>
+          Veuillez vérifier vos informations {% if failed.error_image %} - Une erreur est survenue avec l'image{%endif %}
+        </div>
+      {% endif %}
+      <div class="form-group {% if failed.error_title %}has-error{% endif %}">
         <label for="title">Nom du bien</label>
-        <input type="text" class="form-control" value="{{ ad.title}}" name="title"/>
+        <input type="text" class="form-control" value="{% if failed %}{{failed.title}}{%else%}{{ ad.title}}{%endif%}" name="title"/>
       </div>
-      <div class="form-group">
+      <div class="form-group {% if failed.error_info %}has-error{% endif %}">
         <label for="info">Informations :</label>
-        <textarea name="info" id="info" class="form-control" rows="3">{{ ad.info }}</textarea>
+        <textarea name="info" id="info" class="form-control" rows="3">{% if failed %}{{failed.info}}{%else%}{{ ad.info }}{%endif%}</textarea>
       </div>
-      <div class="form-group">
+      <div class="form-group {% if failed.error_category %}has-error{% endif %}">
         <label for="category">Catégorie</label>
         <select class="form-control" name="category">
           {% for category in categories %}
@@ -21,7 +28,7 @@
           {% endfor %}
         </select>
       </div>
-      <div class="form-group">
+      <div class="form-group {% if failed.error_image %}has-error{% endif %}">
         {% if ad %}
           L'image n'est pas éditable.
         {% else %}

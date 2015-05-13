@@ -86,11 +86,19 @@ class CreateHandler(BaseHandler):
 
     # Get image data
     image = self.request.get('file')
-    # Transform the image
-    image = images.resize(image, 250, 320)
-    
+
+    try:
+      # Transform the image
+      image = images.resize(image, 250, 320)
+    except images.Error:
+      image = None
     # Create and save into datastore
     ad = Ad(title=title, info=info, image=image, user=self.user.key, category=int(category))
+
+    if not ad.valide():
+      upload_url = blobstore.create_upload_url('/createPhoto')
+      self.render_template('create.html', {'upload_url': upload_url, 'failed': ad})
+      return
     ad.put()
     
     # Redirect to the product page
@@ -131,9 +139,13 @@ class ReportHandler(BaseHandler):
       message = mail.EmailMessage()
       message.sender = "stephseguin93@gmail.com"
       message.to = "stephseguin93@gmail.com"
+      message.subject = "Signalement d'une annonce"
       message.body = """
-L'annonce "%s" vient d'être reportée
-    """ % str(ad.title)
+L'annonce "%s" vient d'être reportée par %s
+
+Lien de l'annonce : %s/edit/%s
+    """ % (str(ad.title), str(self.user.email_address), self.request.url.rsplit('/', 2)[0], urlsafe)
+      print(message.body)
       message.send()
     self.redirect('/')
 
@@ -175,6 +187,10 @@ class ProfileHandler(BaseHandler):
     u.firstname = self.request.get('firstname')
     u.phone = self.request.get('phone')
     u.displayPhone = (self.request.get('displayNumber') != 'on')
+
+    if not u.valide():
+      self.render_template('signup.html', { 'failed': u, 'userEdition': self.user });
+      return
 
     u.put()
 

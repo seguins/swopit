@@ -4,21 +4,43 @@ from webapp2_extras.appengine.auth.models import User
 from google.appengine.ext import ndb
 from webapp2_extras import security
 
+from google.appengine.api import mail
+
+
 global categories
 categories = ["Salon", "Cuisine", "Chambre", "Bureau", "Salle de bain", "Petit décoration", "Equipement loisirs"]
 
 
 class User(User):
-  email_address = ndb.StringProperty(indexed=True)
-  number_card = ndb.StringProperty(indexed=True)
-  lastname = ndb.StringProperty(indexed=False)
-  firstname = ndb.StringProperty(indexed=False)
-  phone = ndb.StringProperty(indexed=False)
-  displayPhone = ndb.BooleanProperty(default=True)
+  email_address = ndb.StringProperty(indexed=True, required=True)
+  number_card = ndb.StringProperty(indexed=True, required=True)
+  lastname = ndb.StringProperty(indexed=False, required=True)
+  firstname = ndb.StringProperty(indexed=False, required=True)
+  phone = ndb.StringProperty(indexed=False, required=True)
+  displayPhone = ndb.BooleanProperty(default=True, required=True)
   token = ndb.StringProperty()
 
   def set_password(self, raw_password):
     self.password = security.generate_password_hash(raw_password, length=12)
+
+  def valide(self):
+    good = True
+    if not self.email_address or not mail.is_email_valid(self.email_address):
+      self.error_email = True
+      good = False
+    if not self.number_card:
+      self.error_number_card = True
+      good = False
+    if not self.lastname:
+      self.error_lastname = True
+      good = False
+    if not self.firstname:
+      self.error_firstname = True
+      good = False
+    if not self.phone :
+      self.error_phone = True
+      good = False
+    return good
 
   @classmethod
   def get_by_auth_token(cls, user_id, token, subject='auth'):
@@ -53,8 +75,21 @@ class User(User):
 
 class Ad(ndb.Model):
   user = ndb.KeyProperty(kind='User')
-  title = ndb.StringProperty()
-  info = ndb.TextProperty()
+  title = ndb.StringProperty(required=True)
+  info = ndb.TextProperty(required=True)
   created = ndb.DateTimeProperty(auto_now_add=True)
-  image = ndb.BlobProperty()
-  category = ndb.IntegerProperty()
+  image = ndb.BlobProperty(required=True)
+  category = ndb.IntegerProperty(required=True)
+
+  def valide(self):
+    good = True
+    if not self.title:
+      self.error_title = True
+      good = False
+    if not self.info:
+      self.error_info = True
+      good = False
+    if not self.image:
+      self.error_image = True
+      good = False
+    return good

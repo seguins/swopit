@@ -11,7 +11,7 @@ import uuid
 
 class LoginHandler(BaseHandler):
   def get(self):
-    self._serve_page()
+    self._serve_login()
 
   def post(self):
     username = self.request.get('username')
@@ -21,9 +21,9 @@ class LoginHandler(BaseHandler):
         save_session=True)
       self.redirect(self.uri_for('home'))
     except (InvalidAuthIdError, InvalidPasswordError) as e:
-      self._serve_page(True)
+      self._serve_login(True)
 
-  def _serve_page(self, failed=False):
+  def _serve_login(self, failed=False):
     username = self.request.get('username')
     params = {
       'username': username,
@@ -42,21 +42,29 @@ class SignupHandler(BaseHandler):
     lastname = self.request.get('lastname')
     firstname = self.request.get('firstname')
     phone = self.request.get('phone')
+    displayPhone = (self.request.get('displayNumber') != 'on')
+
+    u = User(email_address=email, password_raw=password,
+      number_card=number_card, lastname=lastname, firstname=firstname,
+      phone=phone, displayPhone=displayPhone)
+
+    if not u.valide():
+      self.render_template('signup.html', { 'failed': u });
+      return
 
     unique_properties = ['email_address']
     user_data = self.user_model.create_user(email,
       unique_properties,
       email_address=email, password_raw=password,
       number_card=number_card, lastname=lastname, firstname=firstname,
-      phone=phone, displayPhone=(self.request.get('displayNumber') != 'on'), verified=True)
-    if not user_data[0]: #user_data is a tuple
-      self.response.headers['Content-Type'] = 'text/plain'
-      self.response.write('Unable to create user for email %s because of \
-        duplicate keys %s' % (email, user_data[1]))
+      phone=phone, displayPhone=displayPhone, verified=True)
+    if not user_data[0]:
+      u.alreadyUsed = True
+      u.error_email = True
+      self.render_template('signup.html', {'failed': u})
       return
     
     user = user_data[1]
-    user_id = user.get_id()
 
     self.redirect('/')
 
@@ -99,6 +107,7 @@ class ForgetHandler(BaseHandler):
       message = mail.EmailMessage()
       message.sender = "stephseguin93@gmail.com"
       message.to = username
+      message.subject = "Mot de passe oublié"
       message.body = """
 Vous avez oublié votre mot de passe pour Stan'Ton Meuble.
 

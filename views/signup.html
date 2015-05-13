@@ -13,32 +13,45 @@
   {% endif %}
   <form method="POST">
     <div class="row">
-      <div class="col-md-6">
-        <div class="form-group">
-          <label for="number_card">Numero de carte étudiante</label>
-          <input type="text" class="form-control" value="{{ userEdition.number_card }}" name="number_card" />
-        </div>    
-        <div class="form-group">
-          <label for="lastname">Nom</label>
-          <input type="text" class="form-control" value="{{ userEdition.lastname }}" name="lastname" />
+
+      {% if failed %}
+        <div class="alert alert-danger" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Une erreur est survenue :</span>
+          {% if failed.alreadyUsed %}
+            L'email est déjà utilisé.
+          {% else %}
+            Veuillez vérifier vos informations.
+          {% endif %}
         </div>
-        <div class="form-group">
+      {% endif %}
+
+      <div class="col-md-6">
+        <div class="form-group {%if failed.error_number_card %}has-error{% endif %}">
+          <label for="number_card">Numero de carte étudiante</label>
+          <input type="text" class="form-control" value="{% if failed %}{{failed.number_card}}{% else %}{{ userEdition.number_card }}{% endif %}" name="number_card" />
+        </div>    
+        <div class="form-group {%if failed.error_lastname %}has-error{% endif %}">
+          <label for="lastname">Nom</label>
+          <input type="text" class="form-control" value="{% if failed %}{{failed.lastname}}{% else %}{{ userEdition.lastname }}{% endif %}" name="lastname" />
+        </div>
+        <div class="form-group {%if failed.error_firstname %}has-error{% endif %}">
           <label for="firstname">Prénom</label>
-          <input type="text" class="form-control" value="{{ userEdition.firstname }}" name="firstname" />
+          <input type="text" class="form-control" value="{% if failed %}{{failed.firstname}}{% else %}{{ userEdition.firstname }}{% endif %}" name="firstname" />
         </div>
       </div>
       <div class="col-md-6">
-        <div class="form-group">
+        <div class="form-group {%if failed.error_email %}has-error{% endif %}">
           <label for="email">Addresse Email</label>
-          <input type="text" class="form-control" value="{{ userEdition.email_address }}" name="email" />
+          <input type="text" class="form-control" value="{% if failed %}{{failed.email_address}}{% else %}{{ userEdition.email_address }}{% endif %}" name="email" />
         </div>
-        <div class="form-group">
+        <div class="form-group {%if failed.error_password %}has-error{% endif %}">
           <label for="password">Mot de passe</label>
           <input type="password" class="form-control" name="password" />
         </div>
-        <div class="form-group">
+        <div class="form-group {%if failed.error_phone %}has-error{% endif %}">
           <label for="phone">Numéro de téléphone</label>
-          <input type="text" class="form-control" value="{{ userEdition.phone }}" name="phone" />
+          <input type="text" class="form-control" value="{% if failed %}{{failed.phone}}{% else %}{{ userEdition.phone }}{% endif %}" name="phone" />
         </div>
         <div class="checkbox">
           <label>

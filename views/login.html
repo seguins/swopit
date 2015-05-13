@@ -8,6 +8,16 @@
 {% block content %}
 <h2>Connexion</h2>
 <div class="row">
+
+{% if failed %}
+  <div class="alert alert-danger" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Echec de connexion :</span>
+    Veuillez vérifier vos informations.
+  </div>
+{% endif %}
+
+
   <form class="form col-md-6 col-md-offset-3" action= "/login" method="POST">
       <div class="form-group">
         <label for="username">Email</label>
