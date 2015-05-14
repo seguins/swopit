@@ -21,9 +21,13 @@ h1, h1 a, h1 a:hover {
   font-family: teamspir;
 }
 
+h1 a {
+  font-size: 55px;
+}
+
 h1 span {
   color: #009999;
-  margin-left: 65px;
+  margin-left: 85px;
 }
 
 #content {

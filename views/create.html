@@ -34,6 +34,9 @@
     $("#imgUpload").click(function() {
       $("input[id='my_file']").click();
     });
+    $("input[id='my_file']").change(function() {
+        $("#photoName").text($(this).val())
+    });
     {% endif %}
   </script>
 {% endblock %}
@@ -96,6 +99,7 @@
           <label for="file">Photo</label>
           <img id="imgUpload" src="/stylesheets/photo.png" width="60px" style="vertical-align: middle;"/>
           <input type="file" name="file" id="my_file" style="display: none;" />
+          <span id="photoName"></span>
         {% endif %}
       </div>
       <div class="submitBlock">

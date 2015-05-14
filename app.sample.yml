@@ -24,8 +24,14 @@ handlers:
   script: main.application
   secure: always
 
+- url: /favicon.ico
+  static_files: favicon.ico
+  upload: favicon.ico
+
 - url: /.*
   script: main.application
+
+
 
 libraries:
 - name: webapp2
