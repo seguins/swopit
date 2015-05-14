@@ -180,7 +180,6 @@ class ProfileHandler(BaseHandler):
     self.render_template('signup.html', {'userEdition': self.user})
   def post(self):
     u = self.user
-    u.email_address = self.request.get('email')
     u.username = self.request.get('email')
     u.set_password(self.request.get('password'))
     u.number_card = self.request.get('number_card')

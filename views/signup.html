@@ -40,10 +40,10 @@
           <input type="text" class="form-control" value="{% if failed %}{{failed.firstname}}{% else %}{{ userEdition.firstname }}{% endif %}" name="firstname" />
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 {% if userEdition %}disabled{%endif%}">
         <div class="form-group {%if failed.error_email %}has-error{% endif %}">
-          <label for="email">Addresse Email</label>
-          <input type="text" class="form-control" value="{% if failed %}{{failed.email_address}}{% else %}{{ userEdition.email_address }}{% endif %}" name="email" />
+          <label for="email" >Addresse Email</label>
+          <input type="text" class="form-control" value="{% if failed %}{{failed.email_address}}{% else %}{{ userEdition.email_address }}{% endif %}" name="email" {% if userEdition %}disabled{%endif%} />
         </div>
         <div class="form-group {%if failed.error_password %}has-error{% endif %}">
           <label for="password">Mot de passe</label>
