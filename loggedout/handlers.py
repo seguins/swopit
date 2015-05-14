@@ -2,11 +2,13 @@
 from commons.base_handler import BaseHandler
 from commons.models import *
 import os
+import datetime
 
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
 
 from google.appengine.api import mail
+from google.appengine.ext import db
 
 import uuid
 
@@ -140,3 +142,9 @@ class NewForgetHandler(BaseHandler):
       u.token = None
       u.put()
       self.redirect("/")
+
+class CleanAdsHandler(BaseHandler):
+  def get(self):
+    earliest = datetime.datetime.now() - datetime.timedelta(1*365/12)
+    keys = Ad.query(Ad.created <= earliest).fetch(keys_only=True)
+    ndb.delete_multi(keys)
